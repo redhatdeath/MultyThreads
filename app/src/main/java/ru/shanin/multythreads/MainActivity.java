@@ -9,9 +9,10 @@ import ru.shanin.multythreads.data.Worker;
 
 public class MainActivity extends AppCompatActivity {
     private static final int size;
+    private static final Worker worker;
 
     static {
-        Worker worker = new Worker();
+        worker = new Worker();
         size = 8;
     }
 
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupMyThreads();
+
     }
 
     private void setupMyThreads() {
@@ -32,6 +35,13 @@ public class MainActivity extends AppCompatActivity {
             mThreads[i] = new Thread(mAddUser[i] = new AddUser("myThread_" + (i + 1)));
             mThreads[i].start();
         }
+        try {
+            Thread.sleep(250);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        worker.toStart();
+
 
     }
 

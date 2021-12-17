@@ -1,5 +1,7 @@
 package ru.shanin.multythreads.data;
 
+import android.util.Log;
+
 import java.util.ArrayDeque;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,7 +33,7 @@ public class Worker {
         @Override
         public void run() {
             if (running)
-                System.out.println(queue.poll());
+                Log.d("Worker_queue", String.valueOf(queue.poll()));
             if (queue.isEmpty()) Worker.toStop();
         }
     }
