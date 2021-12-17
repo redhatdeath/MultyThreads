@@ -5,14 +5,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Worker {
-    private static final ArrayDeque<Data> queue;
+    private static final ArrayDeque<User> queue;
     static private boolean running;
     static private final Timer myTimer;
     private static final MyTimerClass myTimerClass;
 
-    public static void addDataToQueue(Data data) {
+    public static void addUserToQueue(User user) {
         synchronized (queue) {
-            queue.add(data);
+            queue.add(user);
         }
     }
 
@@ -38,7 +38,7 @@ public class Worker {
 
     static public void toStart() {
         running = true;
-        myTimer.scheduleAtFixedRate(myTimerClass, 0, 50);
+        myTimer.scheduleAtFixedRate(myTimerClass, 0, 1000);
     }
 
     static public void toStop() {
