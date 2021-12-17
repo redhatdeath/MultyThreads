@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import ru.shanin.multythreads.data.AddUser;
 import ru.shanin.multythreads.data.Worker;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
     private static final int size;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Timber.plant(new Timber.DebugTree());
         setupMyThreads();
 
     }
@@ -32,7 +34,11 @@ public class MainActivity extends AppCompatActivity {
         mThreads = new Thread[size];
         mAddUser = new AddUser[size];
         for (int i = 0; i < size; i++) {
-            mThreads[i] = new Thread(mAddUser[i] = new AddUser("myThread_" + (i + 1)));
+            mAddUser[i] = new AddUser("myThread_" + (i + 1));
+            mThreads[i] = new Thread(mAddUser[i]);
+            Timber.d("Create thread №"+String.valueOf(i+1));
+        }
+        for (int i = 0; i < size; i++) {
             mThreads[i].start();
         }
         try {
@@ -40,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        worker.toStart();
+        Worker.toStart();
 
 
     }
