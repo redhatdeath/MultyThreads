@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class User {
 
-    private final String firstName, secondName,threadName;
+    private final String firstName, secondName, threadName;
 
     private final static int firstNameLength, secondNameLength;
 
@@ -14,7 +14,7 @@ public class User {
     }
 
     public User(String threadName) {
-        this.threadName=threadName;
+        this.threadName = threadName;
         this.firstName = GenData.getNextRandomString(firstNameLength);
         this.secondName = GenData.getNextRandomString(secondNameLength);
     }
@@ -25,6 +25,11 @@ public class User {
 
     public String getSecondName() {
         return secondName;
+    }
+
+    @Override
+    public String toString() {
+        return "User: " + threadName + ", " + secondName + " " + firstName;
     }
 
     static private class GenData {

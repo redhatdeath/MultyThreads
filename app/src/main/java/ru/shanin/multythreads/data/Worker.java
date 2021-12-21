@@ -1,10 +1,11 @@
 package ru.shanin.multythreads.data;
 
-import android.util.Log;
-
 import java.util.ArrayDeque;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import timber.log.Timber;
 
 public class Worker {
     private static final ArrayDeque<User> queue;
@@ -32,8 +33,10 @@ public class Worker {
     static class MyTimerClass extends TimerTask {
         @Override
         public void run() {
-            if (running)
-                Log.d("Worker_queue", String.valueOf(queue.poll()));
+            if (running) {
+                String result = Objects.requireNonNull(queue.poll()).toString();
+                Timber.d(result);
+            }
             if (queue.isEmpty()) Worker.toStop();
         }
     }
@@ -46,5 +49,9 @@ public class Worker {
     static public void toStop() {
         running = false;
         myTimer.cancel();
+    }
+
+    public static void setRunning(boolean running) {
+        Worker.running = running;
     }
 }
